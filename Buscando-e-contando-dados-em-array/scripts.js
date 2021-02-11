@@ -4,7 +4,7 @@
   
     * Contar o número de categorias e o número de livros em cada categoria
     * Contar o número de autores
-    * Mostrar livros do autor Auguto Cury
+    * Mostrar livros do autor Augusto Cury
     * Transformar a função acima em uma função que irá receber o nome do autor e
     devolver os livros desse autor.
 
@@ -51,24 +51,23 @@ class Books {
   constructor(booksByCategory , author) {
     this.booksByCategory = booksByCategory;
     this.author = author;
+    this.authorValue = [];
   }
 
   handleCategory() {
-    let categoriesValue = 0;
+    console.log("Você tem " + this.booksByCategory.length + " categorias");
     this.booksByCategory.forEach((booksCategory) => {
-      this.getCategory(booksCategory)
-      categoriesValue++;
+      this.getCategory(booksCategory);
     });
-    console.log("Você tem " + categoriesValue + " categorias")
   }
 
   getCategory(booksCategory) {
-    console.log("category: " + booksCategory.category)
-    this.getBooks(booksCategory)
+    console.log("category: " + booksCategory.category);
+    this.getBooks(booksCategory);
   }
 
   getBooks(booksCategory) {
-    console.log("number of books: " + booksCategory.books.length)
+    console.log("number of books: " + booksCategory.books.length);
     this.getAuthorBook(booksCategory);
   }
 
@@ -77,16 +76,33 @@ class Books {
       if(book.author == this.author) {
         console.log(this.author + "'s Books: " + book.title);
       }
-    })
+    this.getAuthoBook(book);
+    });
+  }
+
+  getAuthoBook(book) {
+    if (book.author !== this.authorValue) {
+      this.authorValue.push(book.author);
+    }
+  }
+
+  showAuthorValue() {
+    let uniq = this.authorValue.reduce(function(a,b){
+      if (a.indexOf(b) < 0 ) a.push(b);
+      return a;
+    },[]);
+
+    console.log("Number of authors: " + uniq.length)  
   }
 
   init() {
     this.handleCategory();
+    this.showAuthorValue();
   }
 }
 
 // Just put a name of a author
 // and then it will show his books
-const books = new Books(booksByCategory, "Stephen R. Covey");
+const books = new Books(booksByCategory, "Augusto Cury");
 books.init();
 
